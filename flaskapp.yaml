@@ -1,0 +1,26 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: flask-app
+  labels:
+    app: flask-app
+spec:
+  containers:
+  - name: flask-app
+    image: docker.io/sbhamare/py_webapp:latest
+    ports:
+    - containerPort: 5000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: flask-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: flask-app
+  ports:
+  # Default port used by the image
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
